@@ -12,7 +12,7 @@ import {
     return (
       <div className="max-w-6xl mx-auto px-4 py-12">
         <h1 className="text-5xl font-extrabold text-center bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Welcome to Connectify
+          Welcome to SimuLife
         </h1>
         <p className='text-center mt-3 text-lg text-gray-600'>
           Your all-in-one social platform for connecting, sharing, and discovering

@@ -13,7 +13,7 @@ import { Link, useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
 // import ExclusivePostPage from "./ExclusivePostPage";
 import ExclusiveUserPostPage from "./ExclusiveUserPostPage";
-import { IoImagesOutline, IoTrashBinOutline } from "react-icons/io5";
+import { IoImagesOutline } from "react-icons/io5";
 import Loading from "../components/Loading";
 
 const UserPage = () => {
@@ -38,28 +38,28 @@ const UserPage = () => {
 
 
   return (
-    <div className="container mx-auto px-4 pt-10 max-w-xl rounded-lg shadow-sm ">
-      <div className="px-16 flex gap-10 items-center">
+    <div className="container sm:mx-auto sm:px-4 pt-10 sm:max-w-xl rounded-lg shadow-sm ">
+      <div className="sm:px-16 px-5 flex sm:gap-10 gap-4 items-center">
         {/* Profile Image */}
         <img
           src={otherUser?.profilePic || "/avatar.jpg"}
           alt="Profile"
-          className="w-24 h-24 rounded-full object-cover"
+          className="sm:w-24 sm:h-24 h-14 w-14 rounded-full object-cover"
         />
 
         {/* User Info */}
         <div>
           {/* User Name */}
-          <h1 className="text-3xl font-bold mb-5">{otherUser?.name}</h1>
+          <h1 className="sm:text-3xl text-lg font-bold mb-5">{otherUser?.name}</h1>
 
           {/* Stats */}
-          <div className="flex gap-12 mb-1">
+          <div className="flex sm:gap-12 gap-6 mb-1">
             <div className="text-center">
-              <p className="font-bold text-2xl">{userPosts?.length}</p>
-              <p className=" text-lg">Posts</p>
+              <p className="font-bold sm:text-2xl">{userPosts?.length}</p>
+              <p className=" sm:text-lg">Posts</p>
             </div>
             <div className="text-center">
-              <p className="font-bold text-2xl cursor-pointer" onClick={()=>{document.getElementById('my_modal_3').showModal(),getFollowers(Uid)}}>{otherUser?.followers?.length}</p>
+              <p className="font-bold sm:text-2xl cursor-pointer" onClick={()=>{document.getElementById('my_modal_3').showModal(),getFollowers(Uid)}}>{otherUser?.followers?.length}</p>
               <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
                 <h3 className="font-bold text-3xl">Followers</h3>
@@ -89,10 +89,10 @@ const UserPage = () => {
     <button>close</button>
   </form>
 </dialog>
-              <p className=" text-lg">Followers</p>
+              <p className=" sm:text-lg">Followers</p>
             </div>
             <div className="text-center">
-              <p className="font-bold text-2xl cursor-pointer" onClick={()=>{document.getElementById('my_modal_4').showModal(),getFollowings(Uid)}}>{otherUser?.following?.length}</p>
+              <p className="font-bold sm:text-2xl cursor-pointer" onClick={()=>{document.getElementById('my_modal_4').showModal(),getFollowings(Uid)}}>{otherUser?.following?.length}</p>
               <dialog id="my_modal_4" className="modal">
                 <div className="modal-box">
                 <h3 className="font-bold text-3xl">Following</h3>
@@ -124,17 +124,17 @@ const UserPage = () => {
     <button>close</button>
   </form>
 </dialog>
-              <p className=" text-lg">Following</p>
+              <p className=" sm:text-lg">Following</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="px-20 mt-5">
-        <p className="text-lg font-medium">{otherUser?.bio}</p>
+      <div className="sm:px-20 px-5 mt-5">
+        <p className="sm:text-lg text-base-content/70 font-medium">{otherUser?.bio}</p>
       </div>
 
-      <div className="px-16">
+      <div className="sm:px-16 px-5">
         {user?._id === Uid ? (
         <Link to={"/edit-profile"}>
         <button className="px-28 py-4 bg-primary mt-10 w-full text-primary-content rounded-2xl flex justify-center items-center gap-4">
@@ -144,7 +144,7 @@ const UserPage = () => {
         </Link>
         ) : (
 <>
-            <button className={`px-28 py-4 ${user?.following?.includes(otherUser?._id) ? "bg-base-300 text-base-content" : "bg-primary text-primary-content"} mt-10 w-full rounded-2xl flex justify-center items-center gap-4 transition-all duration-500`} onClick={() => followUser(otherUser?._id)}>
+            <button className={`sm:px-28 sm:py-4 py-3 ${user?.following?.includes(otherUser?._id) ? "bg-base-300 text-base-content" : "bg-primary text-primary-content"} mt-10 w-full rounded-2xl flex justify-center items-center gap-4 transition-all duration-500`} onClick={() => followUser(otherUser?._id)}>
               {followLoading ? (
                 <>
                 <Loader className='mr-2 h-5 w-5 animate-spin' aria-hidden='true' />
@@ -166,15 +166,16 @@ const UserPage = () => {
 
       <div className="border-b border-primary mt-5"></div>
 
-<div className="flex justify-center">
+<div className="flex justify-center px-3 mt-3">
       {tabs.map((tab) => (
-        <div key={tab.id} className="cursor-pointer flex items-center py-3 px-44">
+        <div key={tab.id} className="cursor-pointer flex items-center">
           <button className={` ${activeTab === tab.id ? "text-primary border-b-2 border-primary" : "text-base-content"}`} onClick={() => setActiveTab(tab.id)}>
           {tab.icon}
           </button>
         </div>
       ))}
 </div>
+
 
       <div className="mt-10">
 
