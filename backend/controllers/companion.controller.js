@@ -147,58 +147,59 @@ export const getAllCompanions = async(req, res) => {
 }
 
 export const buyCompanions = async (req, res) => {
-    try{
-        const {compId} = req.params;
-        const user  = await User.findById(req.user._id);
+    try {
+        const { compId } = req.params;
+        const user = await User.findById(req.user._id);
 
-        if(!user){
-            return res.status(400).json({message:"User not found"});
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
         }
 
         const companion = await Companion.findById(compId);
 
-        if(!companion){
-            return res.status(400).json({message:"Companion not found"});
+        if (!companion) {
+            return res.status(400).json({ message: "Companion not found" });
         }
 
-        if(companion.owner.includes(user._id)){
-            return res.status(400).json({message:"Companion already bought"});
-        }
-        user.freeLimit = 0;
-
-        if(user.freeLimit === 0 && !user.isPro){
-            return res.status(400).json({message:"You have reached your limit"});
+        if (companion.owner.includes(user._id)) {
+            return res.status(400).json({ message: "Companion already bought" });
         }
 
-        if(user.subscriptionEnd && new Date(user.subscriptionEnd) < new Date()){
-            return res.status(400).json({message:"Your subscription has expired"});
+        if (user.freeLimit === 0 && !user.isPro) {
+            return res.status(400).json({ message: "You have reached your limit" });
+        }
+
+        if (user.subscriptionEnd && new Date(user.subscriptionEnd) < new Date()) {
+            return res.status(400).json({ message: "Your subscription has expired" });
+        }
+
+        if (!user.isPro) {
+            user.freeLimit -= 1;
         }
 
         companion.owner.push(user._id);
-
         await companion.save();
 
-
         user.Companions.push(companion._id);
-
         await user.save();
 
-        res.status(201).json({message:"companion bought successfully",
-        companion : {
-            _id:companion._id,
-            name:companion.name,
-            img:companion.img,
-            owner:companion.owner
-        },
-        user : {
-            isPro:user.isPro,
-            freeLimit:user.freeLimit
-        }
+        res.status(201).json({
+            message: "companion bought successfully",
+            companion: {
+                _id: companion._id,
+                name: companion.name,
+                img: companion.img,
+                owner: companion.owner
+            },
+            user: {
+                isPro: user.isPro,
+                freeLimit: user.freeLimit
+            }
         });
     }
-    catch(error){
-        res.status(500).json({error : error.message})
-        console.log("error in companion" , error.message)
+    catch (error) {
+        res.status(500).json({ error: error.message })
+        console.log("error in companion", error.message)
     }
 }
 
